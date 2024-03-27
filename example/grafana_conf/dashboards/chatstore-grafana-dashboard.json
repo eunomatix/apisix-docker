@@ -1,0 +1,613 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "fifemon-graphql-datasource",
+        "uid": "${DS_GRAPHQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "aliasBy": "",
+          "annotationTags": "",
+          "annotationText": "",
+          "annotationTitle": "",
+          "constant": 6.5,
+          "dataPath": "data",
+          "datasource": {
+            "type": "fifemon-graphql-datasource",
+            "uid": "${DS_GRAPHQL}"
+          },
+          "endTimePath": "endTime",
+          "groupBy": "",
+          "queryText": "query Query {\n  data: getUserUsageData(collection: \"keycloakstore\", userName: \"$username\", from: \"${__from:date}\", to: \"${__to:date}\") {\n    totalBytes\n    date\n  }\n}\n",
+          "refId": "A",
+          "timePath": "Time"
+        }
+      ],
+      "title": "Usage Data",
+      "type": "barchart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 8,
+      "panels": [],
+      "title": "All Data Summary",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "fifemon-graphql-datasource",
+        "uid": "${DS_GRAPHQL}"
+      },
+      "description": "The total number of messages/prompts that were sent that had negative sentiment. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["firstNotNull"],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "aliasBy": "",
+          "annotationTags": "",
+          "annotationText": "",
+          "annotationTitle": "",
+          "constant": 6.5,
+          "dataPath": "data",
+          "datasource": {
+            "type": "fifemon-graphql-datasource",
+            "uid": "${DS_GRAPHQL}"
+          },
+          "endTimePath": "endTime",
+          "groupBy": "",
+          "queryText": "query Query {\n  data: totalStatsWithinTimeInterval(startTime: \"${__from:date:iso}\", endTime: \"${__to:date}\", collection: \"keycloakstore\") {\n    totalNegativeSentiments\n    totalMessages\n  }\n}\n",
+          "refId": "A",
+          "timePath": ""
+        }
+      ],
+      "title": "Total Negative Sentiments",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "totalUsers",
+            "renamePattern": "Users"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "totalNegativeSentiments",
+            "renamePattern": "- Sentiments"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "totalMessages",
+            "renamePattern": "Messages"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "fifemon-graphql-datasource",
+        "uid": "${DS_GRAPHQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "aliasBy": "",
+          "annotationTags": "",
+          "annotationText": "",
+          "annotationTitle": "",
+          "constant": 6.5,
+          "dataPath": "data",
+          "datasource": {
+            "type": "fifemon-graphql-datasource",
+            "uid": "${DS_GRAPHQL}"
+          },
+          "endTimePath": "endTime",
+          "groupBy": "",
+          "queryText": "query Query {\n  data: totalStats(collection: \"keycloakstore\") {\n    totalUsers\n  }\n}\n",
+          "refId": "A",
+          "timePath": "Time"
+        }
+      ],
+      "title": "Total Users",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 6,
+      "panels": [],
+      "title": "User-specific Insights",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "fifemon-graphql-datasource",
+        "uid": "${DS_GRAPHQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["firstNotNull"],
+          "fields": "/.*/",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "aliasBy": "",
+          "annotationTags": "",
+          "annotationText": "",
+          "annotationTitle": "",
+          "constant": 6.5,
+          "dataPath": "data",
+          "datasource": {
+            "type": "fifemon-graphql-datasource",
+            "uid": "${DS_GRAPHQL}"
+          },
+          "endTimePath": "endTime",
+          "groupBy": "",
+          "queryText": "query Query {\n  data: userStats(\n    startTime: \"${__from:date}\"\n    endTime: \"${__to:date}\"\n    userName: \"$username\"\n    collection: \"keycloakstore\"\n  ) {\n    userName\n    messageCount\n    negativeSentimentCount\n  }\n}\n",
+          "refId": "A",
+          "timePath": ""
+        }
+      ],
+      "title": "Panel Title",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "userName",
+            "renamePattern": "User"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "messageCount",
+            "renamePattern": "Messages"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "negativeSentimentCount",
+            "renamePattern": "- Sentiment"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "fifemon-graphql-datasource",
+        "uid": "${DS_GRAPHQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "aliasBy": "",
+          "annotationTags": "",
+          "annotationText": "",
+          "annotationTitle": "",
+          "constant": 6.5,
+          "dataPath": "data",
+          "datasource": {
+            "type": "fifemon-graphql-datasource",
+            "uid": "${DS_GRAPHQL}"
+          },
+          "endTimePath": "endTime",
+          "groupBy": "",
+          "queryText": "query Query {\n  data: getKeycloakAuthUser(username: \"$username\", startTime: \"${__from:date}\", endTime: \"${__to:date}\") {\n    createdAt\n    sentiment\n    ip\n    useragent\n    content\n  }\n}\n",
+          "refId": "A",
+          "timePath": ""
+        }
+      ],
+      "title": "User Table",
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 5,
+      "panels": [],
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_LOKI}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "id": 7,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_LOKI}"
+          },
+          "editorMode": "builder",
+          "expr": "{filename=\"/mnt/logs/LLM.log\"} |= ``",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "LLM Gateway Logs",
+      "type": "logs"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "johndoe",
+          "value": "johndoe"
+        },
+        "datasource": {
+          "type": "fifemon-graphql-datasource",
+          "uid": "${DS_GRAPHQL}"
+        },
+        "definition": "query Query {\n  data: getUserNames(collection: \"keycloakstore\") {\n    userName\n  }\n}\n (data)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "username",
+        "multi": false,
+        "name": "username",
+        "options": [],
+        "query": {
+          "dataPath": "data",
+          "queryText": "query Query {\n  data: getUserNames(collection: \"keycloakstore\") {\n    userName\n  }\n}\n"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "graphql-datasource",
+          "value": "cdfg6fcp94hs0f"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "datasource",
+        "multi": false,
+        "name": "DS_GRAPHQL",
+        "options": [],
+        "query": "fifemon-graphql-datasource",
+        "refresh": 1,
+        "regex": "graphql-datasource",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "loki",
+          "value": "adg01jyo4lr0ge"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Logs",
+        "multi": false,
+        "name": "DS_LOKI",
+        "options": [],
+        "query": "loki",
+        "refresh": 1,
+        "regex": "loki",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "LLMInspect",
+  "uid": "fdfmmkkyink74b",
+  "version": 23,
+  "weekStart": ""
+}

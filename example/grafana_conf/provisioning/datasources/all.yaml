@@ -15,11 +15,27 @@
 # limitations under the License.
 #
 datasources:
- - access: 'proxy'
-   editable: true
-   is_default: true
-   name: 'apisix'
-   org_id: 1
-   type: 'prometheus'
-   url: 'http://prometheus:9090'
-   version: 1
+  - access: "proxy"
+    editable: true
+    name: "apisix"
+    org_id: 1
+    type: "prometheus"
+    url: "http://prometheus:9090"
+    version: 1
+
+  - name: "graphql-datasource"
+    is_default: true
+    acess: "proxy"
+    editable: true
+    org_id: 1
+    type: "fifemon-graphql-datasource"
+    url: "http://inspect_hexagon:4000"
+    version: 1
+
+  - name: "loki"
+    access: "proxy"
+    editable: true
+    org_id: 1
+    type: "loki"
+    url: "http://172.17.0.1:3100"
+    version: 1

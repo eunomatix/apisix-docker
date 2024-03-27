@@ -22,9 +22,9 @@ services:
     image: apache/apisix-dashboard:3.0.1-alpine
     restart: always
     volumes:
-    - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+      - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
-    - "9000:9000"
+      - "9000:9000"
     networks:
       apisix:
 
@@ -46,6 +46,7 @@ services:
       apisix:
 
   etcd:
+    platform: "linux/amd64"
     image: bitnami/etcd:3.4.15
     restart: always
     volumes:
@@ -61,6 +62,7 @@ services:
       apisix:
 
   web1:
+    platform: "linux/amd64"
     image: nginx:1.19.0-alpine
     restart: always
     volumes:
@@ -73,6 +75,7 @@ services:
       apisix:
 
   web2:
+    platform: "linux/amd64"
     image: nginx:1.19.0-alpine
     restart: always
     volumes:
@@ -95,7 +98,7 @@ services:
       apisix:
 
   grafana:
-    image: grafana/grafana:7.3.7
+    image: grafana/grafana:latest
     restart: always
     ports:
       - "3000:3000"
@@ -103,6 +106,8 @@ services:
       - "./grafana_conf/provisioning:/etc/grafana/provisioning"
       - "./grafana_conf/dashboards:/var/lib/grafana/dashboards"
       - "./grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
+    environment:
+      GF_INSTALL_PLUGINS: "fifemon-graphql-datasource"
     networks:
       apisix:
 
