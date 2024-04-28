@@ -17,19 +17,18 @@
 datasources:
   - access: "proxy"
     editable: true
+    is_default: true
     name: "apisix"
     org_id: 1
     type: "prometheus"
     url: "http://prometheus:9090"
     version: 1
 
-  - name: "graphql-datasource"
-    is_default: true
-    acess: "proxy"
+  - name: "infinity-datasource"
+    access: "proxy"
     editable: true
     org_id: 1
-    type: "fifemon-graphql-datasource"
-    url: "http://inspect_hexagon:4000"
+    type: "yesoreyeram-infinity-datasource"
     version: 1
 
   - name: "loki"
